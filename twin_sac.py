@@ -25,7 +25,7 @@ from __future__ import print_function
 import numpy as np
 import tensorflow.compat.v2 as tf
 import tensorflow_probability as tfp
-from value_dice import keras_utils
+from opil import keras_utils
 
 ds = tfp.distributions
 
