@@ -16,10 +16,10 @@
 """A collection of gym wrappers."""
 
 import gym
-from value_dice.wrappers.absorbing_wrapper import AbsorbingWrapper
-from value_dice.wrappers.normalize_action_wrapper import check_and_normalize_box_actions
-from value_dice.wrappers.normalize_action_wrapper import NormalizeBoxActionWrapper
-from value_dice.wrappers.normalize_state_wrapper import NormalizeStateWrapper
+from opil.wrappers.absorbing_wrapper import AbsorbingWrapper
+from opil.wrappers.normalize_action_wrapper import check_and_normalize_box_actions
+from opil.wrappers.normalize_action_wrapper import NormalizeBoxActionWrapper
+from opil.wrappers.normalize_state_wrapper import NormalizeStateWrapper
 
 
 def create_il_env(env_name, seed, shift, scale):
