@@ -34,6 +34,7 @@ from value_dice import gail
 from value_dice import twin_sac
 from value_dice import value_dice
 from value_dice import wrappers
+from value_dice import opil
 
 FLAGS = flags.FLAGS
 
