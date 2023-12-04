@@ -6,7 +6,7 @@ class of reward agent
 
 import tensorflow.compat.v2 as tf
 
-class opil(object):
+class reward_agent(object):
     def __init__(self, state_dim, action_dim):
         self.reward_function = tf.keras.Sequential([
             tf.keras.layers.Dense(
