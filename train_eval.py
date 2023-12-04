@@ -29,12 +29,12 @@ import tensorflow.compat.v2 as tf
 from tf_agents.replay_buffers import tf_uniform_replay_buffer
 from tf_agents.specs import tensor_spec
 from tqdm import tqdm
-from value_dice import data_utils
-from value_dice import gail
-from value_dice import twin_sac
-from value_dice import value_dice
-from value_dice import wrappers
-from value_dice import opil
+from opil import data_utils
+from opil import gail
+from opil import twin_sac
+from opil import value_dice
+from opil import wrappers
+from opil import opil
 
 FLAGS = flags.FLAGS
 
@@ -67,7 +67,7 @@ flags.DEFINE_boolean('normalize_states', True,
                      'Normalize states using expert stats.')
 flags.DEFINE_integer('log_interval', int(1e3), 'Log every N timesteps.')
 flags.DEFINE_integer('eval_interval', int(1e3), 'Evaluate every N timesteps.')
-flags.DEFINE_enum('algo', 'value_dice', ['bc', 'dac', 'value_dice'],
+flags.DEFINE_enum('algo', 'value_dice', ['bc', 'dac', 'value_dice', 'opil'],
                   'Algorithm to use to compute occupancy ration.')
 flags.DEFINE_integer('absorbing_per_episode', 10,
                      'A number of absorbing states per episode to add.')
