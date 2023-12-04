@@ -249,6 +249,9 @@ def main(_):
         alpha_init=FLAGS.sac_alpha,
         hidden_size=FLAGS.hidden_size,
         log_interval=FLAGS.log_interval)
+  elif 'opil' in FLAGS.algo:
+    imitator = opil.reward_agent(env.observation_space.shape[0],
+                               env.action_space.shape[0])
 
   def get_imitation_learning_rewards(states, actions, _):
     return imitator.get_log_occupancy_ratio(states, actions)
