@@ -20,25 +20,23 @@ wget -P value_dice/datasets/ https://storage.googleapis.com/gresearch/value_dice
 wget -P value_dice/datasets/ https://storage.googleapis.com/gresearch/value_dice/datasets/Walker2d-v2.npz
 
 declare -a env_names=("HalfCheetah-v2"  "Hopper-v2"  "Walker2d-v2" "Ant-v2")
-declare -a algos=("opil")
 
 expert_dir="./opil/datasets/"
 save_dir="./opil/save"
 
-for algo in "${algos[@]}"
+
+for env_name in "${env_names[@]}"
 do
-  for env_name in "${env_names[@]}"
+  for ((seed=0;seed<5;seed+=1))
   do
-    for ((seed=0;seed<4;seed+=1))
-    do
-      python -m value_dice.train_eval \
-        --expert_dir $expert_dir \
-        --save_dir $save_dir \
-        --algo $algo \
-        --env_name $env_name \
-        --seed $seed \
-        --num_trajectories 10 \
-        --alsologtostderr
-    done
+    python -m value_dice.train_eval \
+      --expert_dir $expert_dir \
+      --save_dir $save_dir \
+      --algo opil \
+      --env_name $env_name \
+      --seed $seed \
+      --num_recent_policies 4 \
+      --num_trajectories 10 \
+      --alsologtostderr
   done
 done
