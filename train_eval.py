@@ -42,6 +42,7 @@ flags.DEFINE_string('env_name', 'HalfCheetah-v2',
                     'Environment for training/evaluation.')
 flags.DEFINE_integer('seed', 42, 'Fixed random seed for training.')
 flags.DEFINE_integer('sample_batch_size', 256, 'Batch size.')
+flags.DEFINE_integer('policy_buffer_size', 2048, 'Policy replay buffer size.')
 flags.DEFINE_integer('actor_update_freq', 1, 'Update actor every N steps.')
 flags.DEFINE_float('discount', 0.99, 'Discount used for returns.')
 flags.DEFINE_float('replay_regularization', 0.1, 'Amount of replay mixing.')
@@ -54,6 +55,7 @@ flags.DEFINE_float('tau', 0.005,
 flags.DEFINE_integer('hidden_size', 256, 'Hidden size.')
 flags.DEFINE_integer('updates_per_step', 5, 'Updates per time step.')
 flags.DEFINE_integer('max_timesteps', int(1e5), 'Max timesteps to train.')
+flags.DEFINE_integer('num_recent_policies', 4, 'Number of recent policies to train rewards.')
 flags.DEFINE_integer('num_trajectories', 1, 'Number of trajectories to use.')
 flags.DEFINE_integer('num_random_actions', int(2e3),
                      'Fill replay buffer with N random actions.')
@@ -206,7 +208,7 @@ def main(_):
       replay_buffer.as_dataset(sample_batch_size=FLAGS.sample_batch_size))
 
   policy_replay_buffer = tf_uniform_replay_buffer.TFUniformReplayBuffer(
-      spec, batch_size=1, max_length=FLAGS.max_timesteps * 2)
+      spec, batch_size=1, max_length=FLAGS.policy_buffer_size)
 
   policy_replay_buffer_iter = iter(
       policy_replay_buffer.as_dataset(
@@ -361,9 +363,12 @@ def main(_):
 
       obs = next_obs
 
+      if total_timesteps % (2048/FLAGS.num_recent_policies) != 0:
+          continue
+      
       if total_timesteps >= FLAGS.start_training_timesteps:
         with summary_writer.as_default():
-          for _ in range(FLAGS.updates_per_step):
+          for _ in range(FLAGS.updates_per_step*(512//FLAGS.num_recent_policies+1)):
             if 'dac' in FLAGS.algo:
               imitator.update(expert_dataset_iter, policy_replay_buffer_iter)
             elif 'value_dice' in FLAGS.algo:
