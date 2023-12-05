@@ -228,7 +228,7 @@ def main(_):
   expert_dataset_iter = iter(expert_dataset)
 
   hparam_str_dict = dict(
-      seed=FLAGS.seed, algo=FLAGS.algo, env_name=FLAGS.env_name)
+      seed=FLAGS.seed, algo=FLAGS.algo, env_name=FLAGS.env_name, N=FLAGS.num_recent_policies)
   hparam_str = ','.join(['%s=%s' % (k, str(hparam_str_dict[k])) for k in
                          sorted(hparam_str_dict.keys())])
 
