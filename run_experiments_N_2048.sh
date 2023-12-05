@@ -29,7 +29,7 @@ for env_name in "${env_names[@]}"
 do
   for ((seed=0;seed<5;seed+=1))
   do
-    python -m value_dice.train_eval \
+    python -m opil.train_eval \
       --expert_dir $expert_dir \
       --save_dir $save_dir \
       --algo opil \
