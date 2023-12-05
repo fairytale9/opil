@@ -20,10 +20,10 @@ wget -P value_dice/datasets/ https://storage.googleapis.com/gresearch/value_dice
 wget -P value_dice/datasets/ https://storage.googleapis.com/gresearch/value_dice/datasets/Walker2d-v2.npz
 
 declare -a env_names=("HalfCheetah-v2"  "Hopper-v2"  "Walker2d-v2" "Ant-v2")
-declare -a algos=("dac" "opil")
+declare -a algos=("opil")
 
 expert_dir="./opil/datasets/"
-save_dir="./save_opil/"
+save_dir="./opil/save"
 
 for algo in "${algos[@]}"
 do
@@ -37,7 +37,7 @@ do
         --algo $algo \
         --env_name $env_name \
         --seed $seed \
-        --num_trajectories 1 \
+        --num_trajectories 10 \
         --alsologtostderr
     done
   done
